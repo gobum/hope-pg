@@ -1,5 +1,5 @@
 # hope-pg
-Postgres数据库的SQL测试框架。The SQL testing framework for Postgres databases.
+The SQL testing libaray for Postgres databases.
 ## Usage:
 ### 0. Write Test Case Script
 #### ./test/test.sql
