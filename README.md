@@ -1,6 +1,8 @@
 # hope-pg
 Postgres数据库的SQL测试框架。The SQL testing framework for Postgres databases.
 ## Usage:
+### 0. Write Test Case Script
+#### ./test/test.sql
 ```sql
 -- Include the hope.sql.
 \ir ../hope.sql
@@ -37,4 +39,11 @@ Postgres数据库的SQL测试框架。The SQL testing framework for Postgres dat
 :done
 
 -- Run this SQL script with psql to get a test report.
+```
+### 1. Run Test Case Script
+```bash
+$ psql -f ./test/test.sql
+```
+### 2. Get Test Report
+```
 ```
