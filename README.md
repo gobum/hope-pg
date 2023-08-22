@@ -4,39 +4,39 @@ The SQL testing libaray for Postgres databases.
 ### 0. Write Test Case Script
 #### ./test/test.sql
 ```sql
--- Include the hope.sql.
+-- Include the Hope.sql.
 \ir ../hope.sql
 
 -- Clear all objects to keep the database clean.
-:hope /* Clear Schema: */
+:Hope /* Clear Schema: */
   drop schema if exists public cascade \;
   create schema public
-:done
+:Done
 
 -- Include the SQL script file to test.
-:include struct.sql
-:include init.sql
+:Include struct.sql
+:Include init.sql
 
 -- Begin Testing:
-:hope /* Select from Person: */
+:Hope /* Select from Person: */
   select *
     from Person
     where age <70
-  :success
-  :row_count = 2
-:done
+  :Pass
+  :Row_Count = 5
+:Done
 
-:hope /* Insert into Person failure: */
+:Hope /* Insert into Person failure: */
   insert into Person
     values ('P001', 'Li Zhan', 55)
-  :failure
-:done
+  :Fail
+:Done
 
-:hope /* Assert Expression: */
-  select age=55 as :assert
+:Hope /* Assert Expression: */
+  select age=55 as :Assert
     from Person
     where name = 'Leadzen'
-:done
+:Done
 
 -- Run this SQL script with psql to get a test report.
 ```
@@ -47,44 +47,55 @@ $ psql -f ./test/test.sql
 ### 2. Get Test Report
 ```
 Import hope.sql
-Time: 0.621 ms
 
-/* Clear Schema: */
+
+Hope: /* Clear Schema: */
   drop schema if exists public cascade ;
-  create schema public 
+  create schema public
 psql:test/test.sql:8: NOTICE:  drop cascades to table person
-Time: 20.683 ms
-done.
-Time: 13.957 ms
-Time: 5.275 ms
+Time: 5.205 ms
+Done.
 
-/* Select from Person: */
+Include Script File.
+create table Person (
+  id      varchar(16) primary key,
+  name    varchar(32),
+  age     int
+);
+Include Script File.
+insert into Person values
+  ('P001', 'Leadzen', 55),
+  ('P002', 'Jack Ma', 60),
+  ('P003', 'Bill Gates', 79)
+;
+
+Hope: /* Select from Person: */
   select *
     from Person
     where age <70
-   
-Time: 1.283 ms
-[✔] Hope to execute SQL command successful.
-Read row count.
-Time: 0.456 ms
-[✔] Hope row_count=2
-done.
+  
+Time: 0.447 ms
+[✔] Hope to execute SQL passed.
+[✘] Hope Row_Count=5
+Done.
 
-/* Insert into Person failure: */
+
+Hope: /* Insert into Person failure: */
   insert into Person
     values ('P001', 'Li Zhan', 55)
-   
+  
 psql:test/test.sql:26: ERROR:  duplicate key value violates unique constraint "person_pkey"
 DETAIL:  Key (id)=(P001) already exists.
-Time: 0.792 ms
-[✔] Hope to execute SQL command failed.
-done.
+Time: 0.418 ms
+[✔] Hope to execute SQL failed.
+Done.
 
-/* Assert Expression: */
-  select age=55 as  assert_ 
+
+Hope: /* Assert Expression: */
+  select age=55 as assert 
     from Person
-    where name = 'Leadzen' 
-Time: 1.118 ms
+    where name = 'Leadzen'
+Time: 0.674 ms
 [✔] Check assertion.
-done.
+Done.
 ```
