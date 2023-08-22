@@ -1,35 +1,36 @@
--- Include the hope.sql.
+-- Include the Hope.sql.
 \ir ../hope.sql
 
 -- Clear all objects to keep the database clean.
-:hope /* Clear Schema: */
+:Hope /* Clear Schema: */
   drop schema if exists public cascade \;
   create schema public
-:done
+:Done
 
 -- Include the SQL script file to test.
-:include struct.sql
-:include init.sql
+:Include struct.sql
+:Include init.sql
 
 -- Begin Testing:
-:hope /* Select from Person: */
+:Hope /* Select from Person: */
   select *
     from Person
     where age <70
-  :success
-  :row_count = 2
-:done
+  :Pass
+  :Row_Count = 5
+:Done
 
-:hope /* Insert into Person failure: */
+:Hope /* Insert into Person failure: */
   insert into Person
     values ('P001', 'Li Zhan', 55)
-  :failure
-:done
+  :Fail
+:Done
 
-:hope /* Assert Expression: */
-  select age=55 as :assert
+:Hope /* Assert Expression: */
+  select age=55 as :Assert
     from Person
     where name = 'Leadzen'
-:done
+:Done
+
 
 -- Run this SQL script with psql to get a test report.
