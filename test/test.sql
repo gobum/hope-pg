@@ -32,4 +32,10 @@
     where name = 'Leadzen'
 :Done
 
+:Hope /* Columns Assert */
+  select name, age
+    from Person
+  :Columns = 2
+:Done
+
 -- Run this SQL script with psql to get a test report.
