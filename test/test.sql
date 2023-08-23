@@ -17,7 +17,7 @@
     from Person
     where age <70
   :Pass
-  :Row_Count = 5
+  :Rows = 2
 :Done
 
 :Hope /* Insert into Person failure: */
@@ -31,6 +31,5 @@
     from Person
     where name = 'Leadzen'
 :Done
-
 
 -- Run this SQL script with psql to get a test report.
