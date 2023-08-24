@@ -27,6 +27,7 @@
 \set s_assert '''Check assertion.\n'''
 \set s_rows 'Hope Rows:EXPR''\n'''
 \set s_cols 'Hope Columns:EXPR''\n'''
+\set s_var 'Hope Set Variable''\n'''
 \set s_done :z'''Done.\n\n'''
 
 \set e_include    '''\n:Include\n'''
@@ -36,6 +37,7 @@
 \set e_assert     ''':Assert\n'''
 \set e_rows       ''':Rows\n'''
 \set e_cols       ''':Columns\n'''
+\set e_var        ''':Variable\n'''
 \set e_done       ''':Done\n'''
 
 -- 状态变量
@@ -47,6 +49,7 @@
 -- :ROW     当前测试用例用于测试 SQL 的返回记录行数
 -- :COL     当前测试用例用于测试 SQL 的返回记录列数
 -- :ASS     当前测试用例用于测试断言
+-- :VAR     当前测试用于设置变量
 
 \set to_job '\\set error 0 \\set JOB 1 \\set SQL 1 \\set DID 0 \\set ACT 0 \\set ROW 0 \\set COL 0 \\set ASS 0 '
 \set to_act '\\set ACT 1 '
@@ -68,15 +71,16 @@
 
 \set exe '\\if :ACT \\r \\else ' :t1 :log:d '\\g' :log:z :t0 ' \\endif '
 \set des :t1 :log:d '\\gdesc ' :log:z :t0
-\set gxe :t1 :log:d '\\gset' :log:z :t0
+\set gxe :t1 :log:d '\\set ROW_COUNT 0 \\gset' :log:z :t0
 \set row :exe ' \\\\select :ROW_COUNT:EXPR as assert \\gset '
 \set col :des ' \\\\select :ROW_COUNT:EXPR as assert \\gset '
-\set ass :gxe ' \\\\ select :ROW_COUNT <>1 error \\gset '
+\set ass :gxe '\\\\ select :ROW_COUNT <>1 error \\gset '
 \set do_pass :cmd :exe ' \\if :ERROR ' :log :f:s_pass:z ' \\else ' :log :t:s_pass:d ' \\endif\\\\'
 \set do_fail :cmd :exe ' \\if :ERROR ' :log :t:s_fail:z ' \\else ' :log :f:s_fail:d ' \\endif\\\\'
 \set do_row '\\if :ERROR ' :log :u:s_rows:z ' \\else ' :row ' \\if :ERROR ' :log :u:s_rows:z ' \\elif :assert ' :log :t:s_rows:z ' \\else ' :log :f:s_rows:z '\\endif \\endif\\\\ '
 \set do_col '\\if :ERROR ' :log :u:s_cols:z ' \\else ' :col ' \\if :ERROR ' :log :u:s_cols:z ' \\elif :assert ' :log :t:s_cols:z ' \\else ' :log :f:s_cols:z '\\endif \\endif\\\\ '
 \set do_ass :cmd :ass ' \\if :error ' :log :u:s_assert:z ' \\elif :assert ' :log :t:s_assert:z ' \\else ' :log :f:s_assert:z ' \\endif\\\\' 
+\set do_var :cmd :ass '\\if :error ' :log :f:s_var:z ' \\else ' :log :t:s_var:z '\\endif\\\\'
 
 -- :Include 引用其他SQL文件
 \set Include '\\if :JOB ' :err :e_include:z ' \\q \\else ' :log :s_include ' \\endif \\ir '
@@ -99,6 +103,9 @@
 -- :Assert 断言表达式
 \set Assert '\\if :ACT ' :err :e_assert:z ' \\q \\else \\\\assert ' :to_did '\\set ASS 1 \\endif\\\\'
 
+-- :Variable 设置变量
+\set Variable '\\if :ACT ' :err :e_var:z ' \\q \\else ' :do_var :to_did '\\endif\\\\'
+
 -- :Done 结束测试用例
 \set Done '\\if :JOB \\if :ROW ' :do_row ' \\elif :COL ' :do_col ' \\elif :ASS ' :do_ass ' \\else ' :cmd :exe ' \\endif ' :log :z:s_done :to_end ' \\else ' :err :e_done:z ' \\q \\endif\\\\ '
 
@@ -107,9 +114,9 @@
 :log 'Import hope.sql\n\n'
 
 \unset do_ass \unset do_row \unset do_col \unset do_fail \unset do_pass 
-\unset ass \unset row \\unset col \unset gxe \unset des \unset exe \unset cmd \unset err \unset log
+\unset ass \unset row \unset col \unset gxe \unset des \unset exe \unset cmd \unset err \unset log
 
 \unset t1 \unset t0 \unset to_end \unset to_did \unset to_act \unset to_job 
-\unset e_done \unset e_rows \\unset e_cols \unset e_assert \unset e_fail \unset e_pass \unset e_hope \unset e_include
-\unset s_done \unset s_rows \\unset s_cols \unset s_assert \unset s_fail \unset s_pass \unset s_hope \unset s_include
+\unset e_done \unset e_rows \unset e_cols \unset e_assert \unset e_fail \unset e_pass \unset e_hope \unset e_include
+\unset s_done \unset s_rows \unset s_cols \unset s_assert \unset s_fail \unset s_pass \unset s_hope \unset s_include
 \unset u \unset f \unset t \unset y \unset r \unset g \unset b \unset d \unset z
