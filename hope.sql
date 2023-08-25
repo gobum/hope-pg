@@ -53,7 +53,7 @@
 
 \set to_job '\\set JOB 1 \\set END 0 \\set CMD 1 \\set DID 0 \\set ACT 0 \\set ROW 0 \\set COL 0 \\set ASS 0 '
 \set to_act '\\set ACT 1 '
-\set to_did '\\set DID 1 \\set ACT 1'
+\set to_did '\\set DID 1 '
 \set to_end '\\set END 1 \\set JOB 0 \\set CMD 1 \\set DID 1 \\set ACT 1 \\set ROW 0 \\set COL 0 \\set ASS 0 '
 :to_end
 
@@ -76,8 +76,8 @@
 \set one :gxe '\\\\ select :ROW_COUNT <>1 error \\gset '
 \set do_pass :cmd :exe ' \\if :ERROR ' :log :f:s_pass:z ' \\else ' :log :t:s_pass:d ' \\endif\\\\'
 \set do_fail :cmd :exe ' \\if :ERROR ' :log :t:s_fail:z ' \\else ' :log :f:s_fail:d ' \\endif\\\\'
-\set do_row '\\if :ERROR ' :log :u:s_rows:z ' \\else ' :row ' \\if :ERROR ' :log :u:s_rows:z ' \\elif :assert ' :log :t:s_rows:z ' \\else ' :log :f:s_rows:z '\\endif \\endif\\\\ '
-\set do_col '\\if :ERROR ' :log :u:s_cols:z ' \\else ' :col ' \\if :ERROR ' :log :u:s_cols:z ' \\elif :assert ' :log :t:s_cols:z ' \\else ' :log :f:s_cols:z '\\endif \\endif\\\\ '
+\set do_row :row ' \\if :ERROR ' :log :u:s_rows:z ' \\elif :assert ' :log :t:s_rows:z ' \\else ' :log :f:s_rows:z '\\endif\\\\ '
+\set do_col :col ' \\if :ERROR ' :log :u:s_cols:z ' \\elif :assert ' :log :t:s_cols:z ' \\else ' :log :f:s_cols:z '\\endif\\\\ '
 \set do_ass :cmd :one ' \\if :error ' :log :u:s_assert:z ' \\elif :assert ' :log :t:s_assert:z ' \\else ' :log :f:s_assert:z ' \\endif\\\\' 
 \set do_var :cmd :one '\\if :error ' :log :f:s_var:z ' \\else ' :log :t:s_var:z '\\endif\\\\'
 
