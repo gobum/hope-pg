@@ -43,7 +43,7 @@
 -- 状态变量
 -- :error   测试用例无法检测的错误
 -- :JOB     是否处于测试用例中，:Hope -> 1, :Done -> 0
--- :SQL     当前是否有未输出的 SQL 语句，
+-- :CMD     当前是否有未输出的 SQL 语句，
 -- :DID     当前测试用例是否已经封闭
 -- :ACT     当前测试用例是否已有部分行动
 -- :ROW     当前测试用例用于测试 SQL 的返回记录行数
@@ -51,23 +51,21 @@
 -- :ASS     当前测试用例用于测试断言
 -- :VAR     当前测试用于设置变量
 
-\set to_job '\\set JOB 1 \\set END 0 \\set SQL 1 \\set DID 0 \\set ACT 0 \\set ROW 0 \\set COL 0 \\set ASS 0 '
+\set to_job '\\set JOB 1 \\set END 0 \\set CMD 1 \\set DID 0 \\set ACT 0 \\set ROW 0 \\set COL 0 \\set ASS 0 '
 \set to_act '\\set ACT 1 '
 \set to_did '\\set DID 1 \\set ACT 1'
-\set to_end '\\set END 1 \\set JOB 0 \\set SQL 1 \\set DID 1 \\set ACT 1 \\set ROW 0 \\set COL 0 \\set ASS 0 '
+\set to_end '\\set END 1 \\set JOB 0 \\set CMD 1 \\set DID 1 \\set ACT 1 \\set ROW 0 \\set COL 0 \\set ASS 0 '
 :to_end
 
 ------------------------------------------------------------------------------------------------
 -- 时间计量开关（性能测试）
 \set t0 '\\timing 0 '   \\--关闭计时器
 \set t1 '\\timing 1 '   \\--打开计时器
-\set SQL '\\set ECHO queries\\\\'   \\--关闭 SQL 语句自身输出
-\set SQL_NONE '\\set ECHO none\\\\' \\--打开 SQL 语句自身输出
 
 \set log '\\echo -n '
 \set err '\\echo -n ' :y
 
-\set cmd '\\if :SQL ' :log:b ' \\p ' :log:z ' \\set SQL 0 \\endif '
+\set cmd '\\if :CMD ' :log:b ' \\p ' :log:z ' \\set CMD 0 \\endif '
 
 \set exe '\\if :ACT \\r \\else ' :t1 :log:d '\\g' :log:z :t0 ' \\endif '
 \set des :t1 :log:d '\\gdesc ' :log:z :t0
