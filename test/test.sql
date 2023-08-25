@@ -2,10 +2,10 @@
 \ir ../hope.sql
 
 -- Clear all objects to keep the database clean.
--- :Hope /* Clear Schema: */
-  drop schema if exists public cascade;
-  create schema public;
--- :Done
+:Hope /* Clear Schema: */
+  drop schema if exists public cascade \;
+  create schema public
+:Done
 
 -- Include the SQL script file to test.
 :Include struct.sql
