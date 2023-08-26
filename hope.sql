@@ -67,7 +67,7 @@
 
 \set cmd '\\if :CMD ' :log:b ' \\p ' :log:z ' \\set CMD 0 \\endif '
 
-\set exe '\\if :ACT \\r \\else ' :t1 :log:d '\\g' :log:z :t0 ' \\endif '
+\set exe '\\if :ACT \\r \\else ' :t1 :log:d '\\g' :log:z :t0 ' \\set :ACT 1 \\endif '
 \set des :t1 :log:d '\\gdesc ' :log:z :t0
 \set gxe :t1 :log:d '\\set ROW_COUNT 0 \\gset' :log:z :t0
 \set cnt ' \\\\select :ROW_COUNT:EXPR as assert \\gset '
