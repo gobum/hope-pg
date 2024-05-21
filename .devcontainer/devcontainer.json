@@ -4,7 +4,7 @@
   "initializeCommand": "echo COMPOSE_PROJECT_NAME=${localWorkspaceFolderBasename} > .env",
 	"dockerComposeFile": "compose.yml",
 	"service": "dev",
-	"workspaceFolder": "/src",
+	"workspaceFolder": "/code",
   "mounts": [
 		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,type=bind,readonly",
 		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.git,target=/root/.git,type=bind,readonly",

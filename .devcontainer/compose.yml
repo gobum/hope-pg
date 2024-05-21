@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   dev:
-    # container_name: ${COMPOSE_PROJECT_NAME}-dev
+    container_name: ${COMPOSE_PROJECT_NAME}-dev
     build: .
     tty: true
  
