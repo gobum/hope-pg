@@ -1,13 +1,13 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 {
 	"name": "hope-pg",
-
-	"dockerComposeFile": [
-		"../compose-dev.yaml"
-	],
-
+  "initializeCommand": "echo COMPOSE_PROJECT_NAME=${localWorkspaceFolderBasename} > .env",
+	"dockerComposeFile": "compose.yml",
 	"service": "dev",
-
-	"workspaceFolder": "/workspaces"
-
+	"workspaceFolder": "/src",
+  "mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,readonly",
+		"source=${localEnv:HOME}/.git,target=/root/.git,type=bind,readonly",
+    "source=${localWorkspaceFolder},target=/src,type=bind"
+  ]
 }
