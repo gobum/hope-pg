@@ -6,8 +6,8 @@
 	"service": "dev",
 	"workspaceFolder": "/src",
   "mounts": [
-		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,readonly",
-		"source=${localEnv:HOME}/.git,target=/root/.git,type=bind,readonly",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,type=bind,readonly",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.git,target=/root/.git,type=bind,readonly",
     "source=${localWorkspaceFolder},target=/src,type=bind"
   ]
 }
